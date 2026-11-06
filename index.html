@@ -2,9 +2,63 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  
+<script>
+(function () {
+  const ua = navigator.userAgent.toLowerCase();
+
+  const blockedAgents = [
+    // OpenAI
+    "gptbot",
+    "oai-searchbot",
+    "chatgpt-user",
+    "oai-adsbot",
+
+    // Anthropic
+    "claudebot",
+    "claude-web",
+    "claude-searchbot",
+    "claude-user",
+    "anthropic-ai",
+
+    // Perplexity
+    "perplexitybot",
+    "perplexity-user",
+
+    // Meta
+    "meta-externalagent",
+    "meta-externalfetcher",
+
+    // ByteDance
+    "bytespider",
+
+    // Otros rastreadores
+    "ccbot",
+    "amazonbot",
+    "applebot"
+  ];
+
+  const blocked = blockedAgents.some(agent =>
+    ua.includes(agent)
+  );
+
+  if (blocked) {
+    document.documentElement.innerHTML = `
+      <head>
+        <meta charset="utf-8">
+        <title>Acceso restringido</title>
+      </head>
+      <body>
+        <p>Acceso restringido.</p>
+      </body>
+    `;
+  }
+})();
+</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rascadores Zukini · Repisas, hamacas y torres para gatos hechos a mano</title>
   <meta name="description" content="Rascadores Zukini fabrica repisas, hamacas, pasarelas, casitas y torres con yute para gatos. Convierte tu hogar en un parque de juegos y cotiza por WhatsApp.">
+  <meta name="robots" content="noai, noimageai">
   <meta name="theme-color" content="#0f0b08">
   <script>document.documentElement.classList.add("js");</script>
 
