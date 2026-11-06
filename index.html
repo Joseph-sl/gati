@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rascadores Zukini · Repisas, hamacas y torres para gatos hechos a mano</title>
+  <meta name="description" content="Rascadores Zukini fabrica repisas, hamacas, pasarelas, casitas y torres con yute para gatos. Convierte tu hogar en un parque de juegos y cotiza por WhatsApp.">
+  <meta name="theme-color" content="#0f0b08">
+  <script>document.documentElement.classList.add("js");</script>
+
+  <!-- Al compartir el enlace (WhatsApp, Facebook...). Cuando publiques la página,
+       cambia og:image por la dirección completa, por ejemplo:
+       https://TU-USUARIO.github.io/NOMBRE-DEL-REPO/assets/img/og.jpg -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="Rascadores Zukini">
+  <meta property="og:title" content="Rascadores Zukini · Muebles y rascadores para gatos">
+  <meta property="og:description" content="Repisas, hamacas, pasarelas, casitas y torres con yute. Hechos a mano para que tu gato viva en las alturas.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/poster1.jpg">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Rascadores Zukini",
+    "description": "Muebles y rascadores para gatos: repisas, hamacas, pasarelas, casitas y torres con yute.",
+    "telephone": "+56952232906",
+    "sameAs": [
+      "https://www.instagram.com/rascadoreszukini",
+      "https://www.tiktok.com/@rascadores.zukini",
+      "https://www.facebook.com/rascadores.zukini"
+    ]
+  }
+  </script>
+</head>
+
+<!--
+=====================================================================
+  GUÍA RÁPIDA
+=====================================================================
+
+ARCHIVOS
+  index.html  → contenido: textos, videos y fotos (este archivo)
+  style.css   → colores, tipografías y tamaños
+  script.js   → efecto de scroll + ajustes generales (WhatsApp, suavizado...)
+  servidor.py → (opcional) para probar la página en tu computador; ver el
+                punto 9. No hace falta subirlo a GitHub.
+
+CARPETAS (junto a index.html)
+  assets/videos/   → escena1.mp4, escena2.mp4, escena3.mp4
+  assets/img/      → logos, posters, fotos de galería, productos, etc.
+  datos cliente/   → material original del cliente y respaldos (videos y
+                     fotos sin tocar). NO hace falta subirla a GitHub.
+  Usa nombres en minúsculas y sin espacios: GitHub Pages distingue
+  mayúsculas de minúsculas (Foto1.JPG no es lo mismo que foto1.jpg).
+
+ORDEN DE LA PÁGINA (de arriba hacia abajo)
+  Escena 1 (video) → Sobre Zukini → Escena 2 (video) → Productos →
+  Rascar/trepar/observar → Escena 3 (video) → Galería → Cómo trabajamos →
+  Contacto → Pie de página. Cada parte está entre comentarios "INICIO" y
+  "FIN": puedes mover, copiar o borrar el bloque completo.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1) COMO PONER TUS VIDEOS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Busca los bloques "ESCENA". Cada uno tiene un <video> con
+  data-src="assets/videos/escena1.mp4". Cambia esa ruta por tu archivo.
+  IMPORTANTE: la ruta va en data-src (no en src). Así el video solo se
+  descarga cuando el visitante se acerca a esa parte de la página.
+
+  poster="assets/img/poster1.jpg" es la foto que se ve mientras el video
+  carga (ver el punto 8 para sacarla).
+
+  Los videos son verticales (9:16). En el computador se muestran dentro de
+  un marco a un lado, con el texto al otro; en el celular se ven completos
+  (sin recortar) con una luz difuminada del mismo video arriba y abajo.
+  Con class="scene flip" el video pasa al lado izquierdo en el computador.
+
+  Si falta un archivo, verás un aviso "Falta el video: ..." en esa escena
+  para que sepas qué ruta corregir. Puedes quitar ese aviso borrando la
+  regla ".no-video .stage::after" en style.css.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2) COMO AJUSTAR LA VELOCIDAD DEL VIDEO
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Se cambia con atributos en la etiqueta <section class="scene" ...>:
+
+  data-screens="5"    Cuánto hay que bajar para ver TODO el video, medido
+                      en "pantallas". Más alto = el video avanza más lento.
+                      Más bajo = más rápido.
+  data-speed="1"      Multiplicador de velocidad. 1 = el video termina justo
+                      al final de la escena. 2 = va al doble (termina a
+                      mitad de la escena y se queda en el último cuadro).
+                      0.5 = va a la mitad (solo llega a la mitad del video).
+  data-smooth="0.12"  Inercia. Valores bajos (0.05) = movimiento muy suave y
+                      con retraso. 1 = sigue al scroll sin suavizado.
+  data-start="0"      (opcional) Segundo del video donde empieza.
+  data-end="0"        (opcional) Segundo donde termina. 0 = hasta el final.
+
+  Los valores por defecto de data-speed y data-smooth están en script.js
+  (CONFIG) por si quieres cambiarlos para todas las escenas a la vez.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3) TEXTOS SOBRE EL VIDEO
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Cada <div class="caption" data-show="0.3-0.55"> es un texto que aparece y
+  desaparece mientras avanzas por la escena.
+  data-show="inicio-fin" usa valores de 0 a 1: 0 = comienzo de la escena,
+  1 = final. Ejemplo: "0.3-0.55" aparece al 30% y se va al 55%.
+  Posición en celular: class="caption" (arriba izquierda), "caption center"
+  (centro), "caption right" (arriba derecha). En el computador todos van
+  en la mitad libre al lado del video.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4) FOTOS CON EFECTO PARALLAX
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Cualquier elemento con data-parallax dentro de una sección class="parallax"
+  se mueve a distinta velocidad que la página (las 3 franjas de fotos y el
+  fondo del contacto).
+  data-parallax="0.25"  Velocidad respecto al scroll:
+                          0      = se mueve igual que la página (sin efecto)
+                          0.1 a 0.3 = más lento que la página (fondo)
+                          -0.1 a -0.3 = más rápido que la página (primer plano)
+  data-zoom="0.12"      Cuánto se agranda la capa mientras pasas por la
+                        sección (0 = sin zoom).
+  Las capas de fondo (class="layer bg" para una foto, "layer mark" para el
+  logo tenue del contacto) definen su imagen en el atributo style con
+  url('assets/img/...'): cambia solo esa ruta.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+5) GALERÍA HORIZONTAL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Es la sección class="hscroll": al bajar, las fotos se desplazan hacia el
+  lado. Cada <figure class="card"> es una foto: cambia la ruta del <img> y
+  el texto del <figcaption> (y el "alt", que describe la foto para quienes
+  no la ven). data-screens="2.5" controla cuánto hay que bajar para
+  recorrerla completa. Para una foto horizontal usa class="card wide".
+  Las fotos se ven mejor verticales y de unos 1000 px de ancho, en .webp
+  o .jpg.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+6) PRODUCTOS, PASOS Y OTROS TEXTOS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Son HTML normal: cambia los textos directamente. Cada producto es un
+  <article class="product"> (foto, nombre, descripción). Su botón
+  "Cotizar" abre WhatsApp con un mensaje que menciona el producto: ese
+  nombre está en data-wa="...". Para agregar un producto copia un bloque
+  <article>; para quitarlo, bórralo.
+  Los elementos con class="reveal" aparecen suavemente al llegar a la
+  pantalla (style="--d:.1s" los escalona).
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+7) WHATSAPP, MENSAJE Y REDES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  El número y el mensaje de WhatsApp se cambian en UN solo lugar:
+  script.js → CONFIG.whatsapp y CONFIG.mensaje. Cualquier enlace con
+  data-contact o data-wa lo usa (en el HTML solo queda el número como
+  respaldo por si el navegador no ejecuta scripts).
+  Instagram, TikTok y Facebook son enlaces normales en la sección de
+  contacto y en el pie de página: búscalos con Ctrl+F.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+8) PREPARAR TUS VIDEOS (para que se vean fluidos al hacer scroll)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Un video normal se ve entrecortado al "arrastrarlo" con el scroll porque
+  tiene pocos fotogramas completos. Además, los videos de celular/TikTok
+  suelen venir en H.265 (HEVC), que Chrome, Firefox y Edge no reproducen
+  en muchos equipos: hay que pasarlos a H.264. Con ffmpeg:
+
+    ffmpeg -i entrada.mp4 -an -vf "fps=30" -c:v libx264 -preset slow -crf 26 -g 2 -bf 0 -sc_threshold 0 -pix_fmt yuv420p -movflags +faststart escena1.mp4
+
+  -an           quita el audio (no se usa y pesa de más)
+  fps=30        30 cuadros por segundo
+  -crf 26       calidad/peso (más alto = más liviano; prueba entre 22 y 28)
+  -g 2 -bf 0    un fotograma completo cada 2 cuadros y sin reordenar: mucho
+                más fluido al retroceder. Con -g 1 es perfecto pero pesa más;
+                con -g 8 pesa menos pero se ve algo a saltos al subir.
+  -movflags +faststart   el video empieza a verse antes de terminar de bajar
+
+  No agrandes el video: si el original mide 576x1024, déjalo así (agregar
+  "scale=1920:-2" solo lo haría pesar más sin verse mejor). Si tu video
+  original es 4K, sí conviene bajarlo con scale=1080:-2 (vertical) o
+  scale=1920:-2 (horizontal).
+
+  Metas: máximo 8 a 15 MB por video, y 10 a 20 segundos de duración.
+  GitHub no deja subir archivos de más de 100 MB.
+
+  Para sacar el poster (el primer cuadro del video) como foto:
+
+    ffmpeg -i escena1.mp4 -frames:v 1 -q:v 4 poster1.jpg
+
+  Úsalo con el mismo primer cuadro del video: así, al llegar a la escena, la
+  foto y el video se ven idénticos y el cambio no se nota.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+9) PROBAR EN TU COMPUTADOR Y SUBIR A GITHUB PAGES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Probar en tu computador: abre una terminal en la carpeta del proyecto y
+  ejecuta
+      python3 servidor.py
+  y entra a http://localhost:8000   (Ctrl+C para detenerlo).
+  No uses "python3 -m http.server": ese servidor no deja saltar dentro de los
+  videos y no avanzarían con el scroll. servidor.py sí lo permite y solo sirve
+  para probar en local (no hace falta subirlo a GitHub). Ya publicada en
+  GitHub Pages no tendrás este problema.
+
+  Subir: crea un repositorio en GitHub, sube index.html, style.css,
+  script.js y la carpeta assets (index.html debe quedar en la raíz).
+  Luego en el repositorio: Settings → Pages → "Deploy from a branch" →
+  rama main, carpeta / (root) → Save. En un par de minutos tendrás el
+  enlace https://TU-USUARIO.github.io/NOMBRE-DEL-REPO/
+=====================================================================
+-->
+
+<body>
+  <!-- Iconos (se reutilizan en toda la página con <use href="#i-...">) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-whatsapp" viewBox="0 0 24 24">
+      <path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.2 20.8l4.3-1.2A8.8 8.8 0 1 0 12 3.2z"/>
+      <g transform="translate(6.5 6.5) scale(.46)"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></g>
+    </symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>
+    </symbol>
+    <symbol id="i-tiktok" viewBox="0 0 24 24">
+      <path d="M15 3v11.2a4.2 4.2 0 1 1-4.2-4.2"/><path d="M15 3c.3 2.4 1.9 4.1 4.5 4.4"/>
+    </symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24">
+      <path d="M11 3l1.9 5.6L18.5 10.5l-5.6 1.9L11 18l-1.9-5.6L3.5 10.5l5.6-1.9z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>
+    </symbol>
+    <symbol id="i-rope" viewBox="0 0 24 24">
+      <rect x="8" y="3" width="8" height="18" rx="1.5"/><path d="M8 7.5l8-2.5M8 12l8-2.5M8 16.5l8-2.5"/>
+    </symbol>
+    <symbol id="i-steps" viewBox="0 0 24 24"><path d="M3 21h5v-5h5v-5h5V6h3"/><path d="M17 3h4v4"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24">
+      <path d="M3 11.5L12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5h4v5"/>
+    </symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24">
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+    </symbol>
+  </svg>
+
+  <a class="skip" href="#nosotros">Saltar al contenido</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- Cabecera: logo, menú (solo en pantallas grandes) y botón de contacto -->
+  <header class="topbar" id="top">
+    <a class="brand" href="#top" aria-label="Rascadores Zukini, volver al inicio">
+      <img src="assets/img/logo-mini.png" alt="" width="42" height="42">
+      <span>Zukini</span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#nosotros">Nosotros</a>
+      <a href="#productos">Productos</a>
+      <a href="#galeria">Galería</a>
+      <a href="#como">Cómo trabajamos</a>
+    </nav>
+    <!-- El enlace real se define en script.js → CONFIG.whatsapp -->
+    <a class="btn" data-contact href="https://wa.me/56952232906">
+      <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>Escríbenos
+    </a>
+  </header>
+
+  <a class="wa-float" id="wa-float" data-contact href="https://wa.me/56952232906" aria-label="Escríbenos por WhatsApp">
+    <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+  </a>
+
+  <main>
+
+    <!-- ============================ INICIO ESCENA 1 (portada) ============================ -->
+    <section class="scene" data-screens="5" data-speed="1" data-smooth="0.12" aria-label="Video: repisas, hamacas y pasarelas para gatos instaladas en una pared">
+      <div class="stage">
+        <canvas class="ambient" width="24" height="42" aria-hidden="true"></canvas>
+        <div class="frame">
+          <video class="scene-video"
+                 data-src="assets/videos/escena1.mp4"
+                 poster="assets/img/poster1.jpg"
+                 muted playsinline preload="auto"
+                 disablepictureinpicture disableremoteplayback
+                 tabindex="-1" aria-hidden="true"></video>
+          <div class="shade"></div>
+        </div>
+
+        <div class="caption" data-show="0-0.2">
+          <div class="caption-inner">
+            <p class="eyebrow">Rascadores Zukini</p>
+            <h1>Su mundo<br>en las alturas</h1>
+            <p>Repisas, hamacas, pasarelas y torres con yute, hechas a mano para que tu gato trepe, rasque y descanse a su manera.</p>
+          </div>
+          <span class="scroll-hint" aria-hidden="true">Desliza</span>
+        </div>
+
+        <div class="caption" data-show="0.3-0.55">
+          <div class="caption-inner">
+            <p class="eyebrow">Repisas y rascadores</p>
+            <h2>Una pared,<br>mil recorridos</h2>
+            <p>Escalones, hamacas y postes de yute que convierten una pared vacía en un circuito para trepar, saltar y descansar.</p>
+          </div>
+        </div>
+
+        <div class="caption right" data-show="0.68-0.95">
+          <div class="caption-inner">
+            <p class="eyebrow">Pasarelas y casitas</p>
+            <h2>Su mirador favorito</h2>
+            <p>Puentes y cajas de madera para recorrer la habitación por las alturas, que es donde un gato se siente más seguro.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ============================ FIN ESCENA 1 ============================ -->
+
+
+    <!-- ============================ INICIO SOBRE ZUKINI ============================ -->
+    <section class="about light" id="nosotros" aria-labelledby="t-nosotros">
+      <div class="wrap about-grid">
+        <div class="about-logo reveal">
+          <img src="assets/img/logo-oscuro.png" alt="Logo de Rascadores Zukini: una cabeza de gato dentro de un aro de cuerda" width="560" height="562" loading="lazy">
+        </div>
+        <div class="about-copy reveal" style="--d:.1s">
+          <p class="eyebrow">Sobre Zukini</p>
+          <h2 id="t-nosotros">Hechos a mano para gatos que aman las alturas</h2>
+          <p>En Rascadores Zukini fabricamos repisas, hamacas, pasarelas, casitas y torres para que tu gato tenga un espacio propio donde trepar, rascar, jugar y dormir la siesta.</p>
+          <p>Trabajamos con madera y cuerda de yute natural, y le damos a cada pieza un detalle que nos identifica: la silueta de unas orejitas de gato. Cuéntanos cómo es tu casa y armamos el circuito ideal para tu compañero.</p>
+          <a class="btn solid" data-contact href="https://wa.me/56952232906">
+            <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>Cotizar por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <ul class="pillars">
+          <li class="pillar reveal">
+            <svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg>
+            <h3>Hecho a mano</h3>
+            <p>Piezas de madera trabajadas una a una, con terminaciones cuidadas.</p>
+          </li>
+          <li class="pillar reveal" style="--d:.08s">
+            <svg class="icon" aria-hidden="true"><use href="#i-rope"/></svg>
+            <h3>Yute natural</h3>
+            <p>Postes y plataformas forrados con cuerda de yute, ideal para rascar.</p>
+          </li>
+          <li class="pillar reveal" style="--d:.16s">
+            <svg class="icon" aria-hidden="true"><use href="#i-steps"/></svg>
+            <h3>Pensado en altura</h3>
+            <p>Repisas, hamacas y pasarelas que aprovechan la pared y dejan libre el piso.</p>
+          </li>
+          <li class="pillar reveal" style="--d:.24s">
+            <svg class="icon" aria-hidden="true"><use href="#i-home"/></svg>
+            <h3>Para tu espacio</h3>
+            <p>Balcón, living o dormitorio: el circuito se adapta a tu pared y a tu gato.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- ============================ FIN SOBRE ZUKINI ============================ -->
+
+
+    <!-- ============================ INICIO ESCENA 2 ============================ -->
+    <section class="scene flip" data-screens="4" data-speed="1" data-smooth="0.12" aria-label="Video: casitas con orejas de gato y pasarelas de madera en un balcón con vista a la ciudad">
+      <div class="stage">
+        <canvas class="ambient" width="24" height="42" aria-hidden="true"></canvas>
+        <div class="frame">
+          <video class="scene-video"
+                 data-src="assets/videos/escena2.mp4"
+                 poster="assets/img/poster2.jpg"
+                 muted playsinline preload="auto"
+                 disablepictureinpicture disableremoteplayback
+                 tabindex="-1" aria-hidden="true"></video>
+          <div class="shade"></div>
+        </div>
+
+        <div class="caption" data-show="0.04-0.4">
+          <div class="caption-inner">
+            <p class="eyebrow">Balcones y ventanas</p>
+            <h2>Con vista<br>a todo</h2>
+            <p>Cajas mirador y pasarelas para que tu gato observe la calle desde las alturas, con la protección de la red del balcón.</p>
+          </div>
+        </div>
+
+        <div class="caption right" data-show="0.58-0.95">
+          <div class="caption-inner">
+            <p class="eyebrow">Orejitas de gato</p>
+            <h2>Nuestra firma</h2>
+            <p>Cada casita lleva recortada la silueta de un gato: un detalle que se repite en todos los muebles Zukini.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ============================ FIN ESCENA 2 ============================ -->
+
+
+    <!-- ============================ INICIO PRODUCTOS ============================ -->
+    <section class="products light" id="productos" aria-labelledby="t-productos">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Nuestros productos</p>
+          <h2 id="t-productos">Todo lo que tu gato necesita para subir</h2>
+          <p>Cada pieza se puede combinar con las demás. Elige la que más te guste o cuéntanos tu idea y la armamos juntos.</p>
+        </div>
+
+        <div class="product-grid">
+          <article class="product reveal">
+            <div class="product-img"><img src="assets/img/prod-repisas.webp" alt="Repisas y escalones de madera en una pared blanca decorada con huellitas" width="640" height="800" loading="lazy"></div>
+            <div class="product-body">
+              <h3>Repisas y escalones</h3>
+              <p>Plataformas de madera para saltar de nivel en nivel por la pared.</p>
+              <a class="product-link" data-wa="repisas y escalones" href="https://wa.me/56952232906">Cotizar <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+
+          <article class="product reveal" style="--d:.08s">
+            <div class="product-img"><img src="assets/img/prod-hamacas.webp" alt="Poste de piso a techo forrado en yute con tres hamacas junto a una ventana" width="640" height="800" loading="lazy"></div>
+            <div class="product-body">
+              <h3>Hamacas</h3>
+              <p>Descansaderos colgantes de tela resistente, perfectos junto a la ventana.</p>
+              <a class="product-link" data-wa="hamacas" href="https://wa.me/56952232906">Cotizar <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+
+          <article class="product reveal" style="--d:.16s">
+            <div class="product-img"><img src="assets/img/prod-pasarelas.webp" alt="Rampas y repisas oscuras unidas en una pared, con un poste de yute" width="640" height="800" loading="lazy"></div>
+            <div class="product-body">
+              <h3>Pasarelas y rampas</h3>
+              <p>Conectan repisas y cajas para recorrer la habitación sin pisar el suelo.</p>
+              <a class="product-link" data-wa="pasarelas y rampas" href="https://wa.me/56952232906">Cotizar <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+
+          <article class="product reveal">
+            <div class="product-img"><img src="assets/img/prod-casitas.webp" alt="Casita de madera con la silueta de una cabeza de gato recortada" width="640" height="800" loading="lazy"></div>
+            <div class="product-body">
+              <h3>Casitas con orejas</h3>
+              <p>Refugios de madera con la silueta de un gato recortada en el frente.</p>
+              <a class="product-link" data-wa="casitas con orejas" href="https://wa.me/56952232906">Cotizar <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+
+          <article class="product reveal" style="--d:.08s">
+            <div class="product-img"><img src="assets/img/prod-sisal.webp" alt="Poste rascador forrado en cuerda de yute con un juguete colgante" width="640" height="800" loading="lazy"></div>
+            <div class="product-body">
+              <h3>Rascadores de yute</h3>
+              <p>Postes forrados en cuerda de yute, con juguetes colgantes.</p>
+              <a class="product-link" data-wa="rascadores de yute" href="https://wa.me/56952232906">Cotizar <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+
+          <article class="product reveal" style="--d:.16s">
+            <div class="product-img"><img src="assets/img/prod-torres.webp" alt="Torre multinivel gris y naranja con casitas de madera y postes de yute" width="640" height="800" loading="lazy"></div>
+            <div class="product-body">
+              <h3>Torres multinivel</h3>
+              <p>Plataformas, casitas y postes en una sola estructura.</p>
+              <a class="product-link" data-wa="torres multinivel" href="https://wa.me/56952232906">Cotizar <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- ============================ FIN PRODUCTOS ============================ -->
+
+
+    <!-- ============================ INICIO RASCAR, TREPAR, OBSERVAR (franjas parallax) ============================ -->
+    <section class="parallax insight" aria-labelledby="t-instinto">
+      <div class="wrap wide insight-grid">
+        <div class="insight-copy reveal">
+          <p class="eyebrow">Instinto felino</p>
+          <h2 id="t-instinto">Rascar, trepar y mirar desde lo alto</h2>
+          <p>Los gatos no son caprichosos: cada una de estas conductas responde a un instinto. Darles un lugar donde hacerlo cuida tus muebles y los hace más felices.</p>
+
+          <ul class="insight-list">
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-rope"/></svg>
+              <h3>Rascar</h3>
+              <p>Afilan las uñas, estiran todo el cuerpo y dejan su marca olfativa. Un poste de yute firme y lo bastante alto es su lugar ideal.</p>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-steps"/></svg>
+              <h3>Trepar</h3>
+              <p>Saltar y subir es ejercicio y diversión. Con repisas a distintas alturas, una pared se convierte en un circuito.</p>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg>
+              <h3>Observar</h3>
+              <p>Desde arriba se sienten seguros y controlan su territorio. Una hamaca junto a la ventana es su televisión favorita.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="strips" aria-hidden="true">
+          <div class="strip" data-parallax="0.12"><img src="assets/img/franja-1.webp" alt="" width="576" height="768" loading="lazy"></div>
+          <div class="strip" data-parallax="-0.1"><img src="assets/img/franja-2.webp" alt="" width="576" height="768" loading="lazy"></div>
+          <div class="strip" data-parallax="0.2"><img src="assets/img/franja-3.webp" alt="" width="576" height="768" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+    <!-- ============================ FIN RASCAR, TREPAR, OBSERVAR ============================ -->
+
+
+    <!-- ============================ INICIO ESCENA 3 ============================ -->
+    <section class="scene" data-screens="4" data-speed="1" data-smooth="0.12" aria-label="Video: torre multinivel de madera con postes de yute y casitas con orejas de gato">
+      <div class="stage">
+        <canvas class="ambient" width="24" height="42" aria-hidden="true"></canvas>
+        <div class="frame">
+          <video class="scene-video"
+                 data-src="assets/videos/escena3.mp4"
+                 poster="assets/img/poster3.jpg"
+                 muted playsinline preload="auto"
+                 disablepictureinpicture disableremoteplayback
+                 tabindex="-1" aria-hidden="true"></video>
+          <div class="shade"></div>
+        </div>
+
+        <div class="caption" data-show="0.06-0.46">
+          <div class="caption-inner">
+            <p class="eyebrow">Torres y rascadores</p>
+            <h2>Yute<br>para rascar</h2>
+            <p>Postes forrados en cuerda de yute natural, la textura que los gatos buscan para afilar sus uñas y estirarse.</p>
+          </div>
+        </div>
+
+        <div class="caption right" data-show="0.56-0.95">
+          <div class="caption-inner">
+            <p class="eyebrow">Multinivel</p>
+            <h2>Una torre,<br>mil juegos</h2>
+            <p>Plataformas, casitas y juguetes colgantes: un parque completo que ocupa poco espacio en el piso.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ============================ FIN ESCENA 3 ============================ -->
+
+
+    <!-- ============================ INICIO GALERÍA HORIZONTAL ============================ -->
+    <section class="hscroll" id="galeria" data-screens="2.5" data-smooth="0.1" aria-label="Galería de fotos">
+      <div class="stage">
+        <div class="hscroll-head">
+          <p class="eyebrow">Galería</p>
+          <h2>Así se ven en casa</h2>
+        </div>
+        <div class="track">
+          <figure class="card"><img src="assets/img/galeria-1.webp" alt="Poste de yute de piso a techo con tres hamacas junto a cortinas" width="1000" height="1748" loading="lazy"><figcaption>Poste de piso a techo con hamacas</figcaption></figure>
+          <figure class="card"><img src="assets/img/galeria-2.webp" alt="Torre multinivel gris con postes naranjas y casitas con orejas de gato" width="1000" height="1646" loading="lazy"><figcaption>Torre multinivel con casitas</figcaption></figure>
+          <figure class="card"><img src="assets/img/galeria-3.webp" alt="Rampas y repisas de madera oscura en una pared iluminada con luz cálida" width="1000" height="1754" loading="lazy"><figcaption>Rampas y repisas de pared</figcaption></figure>
+          <figure class="card"><img src="assets/img/galeria-4.webp" alt="Repisas, una hamaca y un poste de yute en la pared de un balcón" width="1000" height="1767" loading="lazy"><figcaption>Repisas y poste en balcón</figcaption></figure>
+          <figure class="card"><img src="assets/img/galeria-5.webp" alt="Circuito de repisas y puente en la pared de un balcón con sillón" width="1000" height="1764" loading="lazy"><figcaption>Circuito de pared en balcón</figcaption></figure>
+        </div>
+        <div class="hprogress" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+    <!-- ============================ FIN GALERÍA HORIZONTAL ============================ -->
+
+
+    <!-- ============================ INICIO CÓMO TRABAJAMOS ============================ -->
+    <section class="steps light" id="como" aria-labelledby="t-como">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Cómo trabajamos</p>
+          <h2 id="t-como">Del WhatsApp a tu pared en cuatro pasos</h2>
+        </div>
+
+        <ol class="step-list">
+          <li class="step reveal">
+            <h3>Cuéntanos</h3>
+            <p>Escríbenos por WhatsApp con fotos de tu espacio, medidas aproximadas y algunos datos de tu gato.</p>
+          </li>
+          <li class="step reveal" style="--d:.08s">
+            <h3>Diseñamos</h3>
+            <p>Te proponemos qué piezas instalar y cómo distribuirlas para que el recorrido sea cómodo y seguro.</p>
+          </li>
+          <li class="step reveal" style="--d:.16s">
+            <h3>Fabricamos</h3>
+            <p>Construimos tus piezas en madera y las forramos con yute y telas resistentes.</p>
+          </li>
+          <li class="step reveal" style="--d:.24s">
+            <h3>A disfrutar</h3>
+            <p>Recibes tu pedido y tu gato estrena su nuevo mundo en las alturas.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+    <!-- ============================ FIN CÓMO TRABAJAMOS ============================ -->
+
+
+    <!-- ============================ INICIO CIERRE / CONTACTO ============================ -->
+    <section class="parallax outro" id="contacto" aria-labelledby="t-contacto">
+      <div class="layer mark" data-parallax="0.15" data-zoom="0.06" style="--img:url('assets/img/logo-claro.png')" aria-hidden="true"></div>
+
+      <div class="parallax-content" data-parallax="0.04">
+        <p class="eyebrow">¿Hablamos?</p>
+        <h2 id="t-contacto">Cuéntanos de tu gato y de tu espacio</h2>
+        <p>Escríbenos por WhatsApp y te ayudamos a elegir las piezas ideales para tu hogar.</p>
+        <a class="btn solid" data-contact href="https://wa.me/56952232906">
+          <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>Escribir por WhatsApp
+        </a>
+
+        <div class="social-row">
+          <a href="https://www.instagram.com/rascadoreszukini" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg>@rascadoreszukini
+          </a>
+          <a href="https://www.tiktok.com/@rascadores.zukini" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-tiktok"/></svg>@rascadores.zukini
+          </a>
+          <a href="https://www.facebook.com/rascadores.zukini" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-facebook"/></svg>Facebook
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- ============================ FIN CIERRE / CONTACTO ============================ -->
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/img/logo-claro.png" alt="Rascadores Zukini" width="120" height="120" loading="lazy">
+          <p>Muebles y rascadores para gatos, hechos a mano. Repisas, hamacas, pasarelas, casitas y torres.</p>
+        </div>
+        <div>
+          <h3>Explorar</h3>
+          <ul>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#productos">Productos</a></li>
+            <li><a href="#galeria">Galería</a></li>
+            <li><a href="#como">Cómo trabajamos</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contacto</h3>
+          <ul>
+            <li><a data-contact href="https://wa.me/56952232906">WhatsApp +56 9 5223 2906</a></li>
+            <li><a href="https://www.instagram.com/rascadoreszukini" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@rascadores.zukini" target="_blank" rel="noopener">TikTok</a></li>
+            <li><a href="https://www.facebook.com/rascadores.zukini" target="_blank" rel="noopener">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legal">© 2026 Rascadores Zukini. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</body>
+</html>
